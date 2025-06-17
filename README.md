@@ -11,3 +11,4 @@ This is a Book Management App (CRUD demo) created using Github Co-Pilot from the
     <li> DTOs to Entity conversion & vice-versa
     <li> Custom exception handling
     <li> Refactored code to send correct http response code
+    <li> Global Api Response
