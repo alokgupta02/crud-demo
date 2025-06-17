@@ -10,3 +10,4 @@ This is a Book Management App (CRUD demo) created using Github Co-Pilot from the
     <li> Writen Unit Test cases
     <li> DTOs to Entity conversion & vice-versa
     <li> Custom exception handling
+    <li> Refactored code to send correct http response code
