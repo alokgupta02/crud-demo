@@ -3,8 +3,8 @@ This is a Book Management App (CRUD demo) created using Github Co-Pilot from the
 **Features**:
 
 **Implemented:**
-<li> Swagger UI
-<li> Pagination and Sorting
-<li> Logging mechanism
-<li> Documentation
-<li> Writen Unit Test cases
+    <li> Swagger UI
+    <li> Pagination and Sorting
+    <li> Logging mechanism
+    <li> Documentation
+    <li> Writen Unit Test cases
