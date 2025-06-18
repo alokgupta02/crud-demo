@@ -12,3 +12,4 @@ This is a Book Management App (CRUD demo) created using Github Co-Pilot from the
     <li> Custom exception handling
     <li> Refactored code to send correct http response code
     <li> Global Api Response
+    <li> Custom messages
