@@ -39,7 +39,8 @@ class BookServiceTest {
     @Test
     void testGetAllBooks() {
         when(bookRepository.findAll()).thenReturn(Arrays.asList());
-        List<BookDto> books = bookService.getAllBooks();
+        // getAllBooks returns a Page<BookDto>, so get the content as a List
+        List<BookDto> books = bookService.getAllBooks(0, 10, new String[]{}).getContent();
         assertNotNull(books);
         verify(bookRepository, times(1)).findAll();
     }
@@ -47,8 +48,8 @@ class BookServiceTest {
     @Test
     void testGetBookById() {
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
-        Optional<BookDto> found = bookService.getBookById(1L);
-        assertTrue(found.isEmpty());
+        BookDto found = bookService.getBookById(1L);
+        assertNull(found);
     }
 
     @Test

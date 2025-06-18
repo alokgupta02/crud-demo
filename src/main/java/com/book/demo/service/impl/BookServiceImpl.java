@@ -16,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Service implementation for Book CRUD operations, pagination, and sorting.
@@ -40,7 +38,9 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Page<BookDto> getAllBooks(int page, int size, String[] sort) {
-        logger.debug("Fetching books: page={}, size={}, sort={}", page, size, String.join(";", sort));
+        if (logger.isDebugEnabled()) {
+            logger.debug("Fetching books: page={}, size={}, sort={}", page, size, String.join(";", sort));
+        }
         Sort sortObj = Sort.by(
             Arrays.stream(sort)
                 .map(s -> {

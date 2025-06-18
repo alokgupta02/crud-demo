@@ -10,21 +10,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /**
  * REST controller for Book CRUD operations.
  */
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/api/v1/books")
 @Tag(name = "Book API", description = "CRUD operations for books with pagination and sorting")
 public class BookController {
     private final BookService bookService;
@@ -44,7 +40,9 @@ public class BookController {
             @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
             @Parameter(description = "Sort fields, e.g. sort=title,asc&sort=author,desc") @RequestParam(defaultValue = "id,asc") String[] sort,
             HttpServletRequest request) {
-        logger.info("Fetching books: page={}, size={}, sort={}", page, size, String.join(";", sort));
+        if (logger.isInfoEnabled()) {
+            logger.info("Fetching books: page={}, size={}, sort={}", page, size, String.join(";", sort));
+        }
         Page<BookDto> data = bookService.getAllBooks(page, size, sort);
         ApiResponse<Page<BookDto>> response = new ApiResponse<>(
             true,
@@ -122,14 +120,7 @@ public class BookController {
     public ResponseEntity<ApiResponse<Void>> deleteBook(@PathVariable Long id, HttpServletRequest request) {
         logger.info("Deleting book with id={}", id);
         bookService.deleteBook(id);
-        ApiResponse<Void> response = new ApiResponse<>(
-            true,
-            ApiMessages.BOOK_DELETE_SUCCESS.getMessage(),
-            null,
-            null,
-            0,
-            request.getRequestURI()
-        );
+        // No need to create ApiResponse since no content is returned
         return ResponseEntity.noContent().build();
     }
 }

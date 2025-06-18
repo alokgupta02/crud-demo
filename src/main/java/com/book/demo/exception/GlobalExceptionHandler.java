@@ -9,6 +9,7 @@ import com.book.demo.response.ApiResponse;
 import com.book.demo.constants.ApiMessages;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import com.book.demo.logging.LoggingAspectException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -41,6 +42,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleOther(Exception ex, HttpServletRequest request) {
+        ApiResponse<Void> response = new ApiResponse<>(
+            false,
+            ApiMessages.INTERNAL_ERROR.getMessage(),
+            null,
+            Collections.singletonList(ApiMessages.INTERNAL_ERROR.getMessage()),
+            500,
+            request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(LoggingAspectException.class)
+    public ResponseEntity<ApiResponse<Void>> handleLoggingAspectException(LoggingAspectException ex, HttpServletRequest request) {
+        Throwable cause = ex.getCause();
+        if (cause instanceof BookNotFoundException bookNotFoundException) {
+            return handleBookNotFound(bookNotFoundException, request);
+        }
         ApiResponse<Void> response = new ApiResponse<>(
             false,
             ApiMessages.INTERNAL_ERROR.getMessage(),

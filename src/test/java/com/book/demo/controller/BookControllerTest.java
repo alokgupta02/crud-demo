@@ -12,8 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
-import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -43,14 +41,14 @@ class BookControllerTest {
 
     @Test
     void testGetAllBooks() throws Exception {
-        when(bookService.getAllBooks()).thenReturn(Arrays.asList(bookDto));
+        when(bookService.getAllBooks(anyInt(), anyInt(), any(String[].class))).thenReturn(new org.springframework.data.domain.PageImpl<>(Arrays.asList(bookDto)));
         mockMvc.perform(get("/api/books"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void testGetBookById() throws Exception {
-        when(bookService.getBookById(1L)).thenReturn(Optional.of(bookDto));
+        when(bookService.getBookById(1L)).thenReturn(bookDto);
         mockMvc.perform(get("/api/books/1"))
                 .andExpect(status().isOk());
     }

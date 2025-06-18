@@ -4,6 +4,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import lombok.Data;
+@Data
+/**
+ * ApiResponse is a generic class that represents the structure of API responses.
+ * It includes fields for success status, message, data, errors, error code, timestamp, and path.
+ *
+ * @param <T> the type of data included in the response
+ */
 public class ApiResponse<T> {
     private boolean success;
     private String message;
@@ -14,7 +22,7 @@ public class ApiResponse<T> {
     private String path;
 
     public ApiResponse() {
-        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss - dd-MM-yyyy"));
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss-dd:MM:yyyy"));
     }
 
     public ApiResponse(boolean success, String message, T data, List<String> errors, int errorCode, String path) {
@@ -27,19 +35,5 @@ public class ApiResponse<T> {
         this.path = path;
     }
 
-    // Getters and setters
-    public boolean isSuccess() { return success; }
-    public void setSuccess(boolean success) { this.success = success; }
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-    public T getData() { return data; }
-    public void setData(T data) { this.data = data; }
-    public List<String> getErrors() { return errors; }
-    public void setErrors(List<String> errors) { this.errors = errors; }
-    public int getErrorCode() { return errorCode; }
-    public void setErrorCode(int errorCode) { this.errorCode = errorCode; }
-    public String getTimestamp() { return timestamp; }
-    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
-    public String getPath() { return path; }
-    public void setPath(String path) { this.path = path; }
+
 }
